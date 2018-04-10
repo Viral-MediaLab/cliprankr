@@ -1,5 +1,4 @@
-from flask import Flask
-from datetime import datetime
+from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
 @app.route('/')
