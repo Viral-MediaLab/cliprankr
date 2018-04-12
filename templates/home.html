@@ -73,7 +73,9 @@
         var videoFile1 = videoMatches[rand1];
         var videoFile2 = videoMatches[rand2];
 
-        $('.to-be-considered').text("hopeful");
+        toConsider = ["Relief", "Joy", "Excitement", "Wonder", "Dislike", "Loathing", "Nervousness", "Desperation", "Panic", "Fury", "Frustration", "Exasperation", "Disappointment", "Hopelessness", "Grief"]
+
+        $('.to-be-considered').text(toConsider[Math.floor(Math.random() * toConsider.length)]);
 
         $('#vid1 video source').attr('src', videoFile1);
         $('#vid2 video source').attr('src', videoFile2);
