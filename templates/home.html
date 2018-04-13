@@ -43,8 +43,31 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
     <script>
+
+    // TODO jquery ajax query api url for tournament type and particpants
+    /* retrival json
+    {
+      tournament_id: "", // emotion toConsider ["Relief", "Joy", "Excitement", "Wonder", "Dislike", "Loathing", "Nervousness", "Desperation", "Panic", "Fury", "Frustration", "Exasperation", "Disappointment", "Hopelessness", "Grief", "Agitated", "Calm"]
+      match_id: "", // purpose is to maintain match integrity and avoid duplication
+      particpants: [
+        {
+          _id: "5579df022d363d3cc9d96bd9"
+          videoUrl: "",
+        },{...}
+      ]
+    }
+ */
       $('button').click((e) => {
-        console.log('POST about '+e.target.id);
+        console.log('POST about '+e.target.id +' winning XYZ tournament, and include loser and not rankings (too easy to troll)');
+
+        {
+          win_id: "",
+          lose_id: "",
+          tournament_id: ""
+        }
+
+        //TODO deactive button on click. .class & e.replace//interrupt
+        // below is filler code
         var videoMatches = [
           "http://um-bubble.media.mit.edu:10022/static/1523404819916.http-um-bubble-media-mit-edu-10022-static-1523401236092-9ea6f6f6-c838-45de-8dce-72ed8ae02ba3-mp4_nocom.mp4#t=1031,1054",
           "http://um-bubble.media.mit.edu:10022/static/1523465136895.5b67ac90-d9f1-494d-9ebc-65fae5458daf.mp4#t=863,886",
@@ -73,7 +96,8 @@
         var videoFile1 = videoMatches[rand1];
         var videoFile2 = videoMatches[rand2];
 
-        toConsider = ["Relief", "Joy", "Excitement", "Wonder", "Dislike", "Loathing", "Nervousness", "Desperation", "Panic", "Fury", "Frustration", "Exasperation", "Disappointment", "Hopelessness", "Grief"]
+        toConsider = ["Relief", "Joy", "Excitement", "Wonder", "Dislike", "Loathing", "Nervousness", "Desperation", "Panic", "Fury", "Frustration", "Exasperation", "Disappointment", "Hopelessness", "Grief", "Agitated", "Calm"]
+        // human emotional response to video, what emotions do networks project, Geshtalt way of looking at things, VGG model
 
         $('.to-be-considered').text(toConsider[Math.floor(Math.random() * toConsider.length)]);
 

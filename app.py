@@ -9,6 +9,7 @@ app = Flask(__name__)
 def homepage():
 
     # TODO query for two short videos, save their urls and videos to a new location (or do this in SG)?
+    # how do we pick a match, make sure 1 of the videos is new (if there are unranked videos).
 
     # select an emotion for battle, then retrieve current ratings from the two videos
     # alice, bob = Rating(250), Rating(500)
@@ -44,6 +45,7 @@ def homepage():
 def recordresults():
     if not request.json:
         abort(400)
+    print("ok :)")
     print(request.json)
 
     # create two ratings objects from the db data
