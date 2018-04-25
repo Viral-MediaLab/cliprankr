@@ -10,7 +10,7 @@
     <div class="container">
       <div class="row" style="padding-top:75px; padding-bottom:50px;">
         <div class="col-sm">
-          <h1>Which clip seems <span class="to-be-considered">Joyful</span>?</h1>
+          <h1>Which clip expresses <span class="to-be-considered">Joyful</span>?</h1>
         </div>
       </div>
       <div class="row" style="text-align:center;">
@@ -57,15 +57,34 @@
       ]
     }
  */
+
+      var current_match = '0';
+
       $('button').click((e) => {
         console.log('POST about '+e.target.id +' winning XYZ tournament, and include loser and not rankings (too easy to troll)');
-
-        {
-          win_id: "",
-          lose_id: "",
-          tournament_id: ""
+        var win_id = 0;
+        var lose_id = 0;
+        switch (e.target.id) {
+          case 'one':
+          win_id = $('#vid1').attr('name');
+          lose_id = $('#vid2').attr('name');
+          break;
+          case 'two':
+          win_id = $('#vid2').attr('name');
+          lose_id = $('#vid1').attr('name');
+          break;
         }
+        var obj = {
+          tournament_id: $('.to-be-considered').text(),
+          match_id: current_match,
+          win_id: win_id,
+          lose_id: lose_id
+        }
+        console.log(obj);
+        replace_vids(get_match());
+      });
 
+      var get_match = () => {
         //TODO deactive button on click. .class & e.replace//interrupt
         // below is filler code
         var videoMatches = [
@@ -93,20 +112,39 @@
         }
         while(rand1 == rand2);
 
-        var videoFile1 = videoMatches[rand1];
-        var videoFile2 = videoMatches[rand2];
-
-        toConsider = ["Relief", "Joy", "Excitement", "Wonder", "Dislike", "Loathing", "Nervousness", "Desperation", "Panic", "Fury", "Frustration", "Exasperation", "Disappointment", "Hopelessness", "Grief", "Agitated", "Calm"]
+        toConsider = ["Relief", "Joy", "Excitement", "Wonder", "Dislike", "Loathing", "Nervousness", "Desperation", "Panic", "Fury", "Frustration", "Exasperation", "Disappointment", "Hopelessness", "Grief", "Agitation", "Calm"]
         // human emotional response to video, what emotions do networks project, Geshtalt way of looking at things, VGG model
 
-        $('.to-be-considered').text(toConsider[Math.floor(Math.random() * toConsider.length)]);
+        var obj = {
+          tournament_id: toConsider[Math.floor(Math.random() * toConsider.length)],
+          match_id: Math.floor(Math.random() * 100).toString(),
+          participants: [
+            {
+              _id: rand1,
+              videoUrl: videoMatches[rand1]
+            },
+            {
+              _id: rand2,
+              videoUrl: videoMatches[rand2]
+            }
+          ]
+        }
 
-        $('#vid1 video source').attr('src', videoFile1);
-        $('#vid2 video source').attr('src', videoFile2);
+        return obj
+      }
+
+      var replace_vids = (obj) => {
+        $('.to-be-considered').text(obj['tournament_id']);
+        $('#vid1 video source').attr('src', obj['participants'][0]['videoUrl']);
+        $('#vid2 video source').attr('src', obj['participants'][1]['videoUrl']);
+        $('#vid1').attr('name', obj['participants'][0]['_id'])
+        $('#vid2').attr('name', obj['participants'][1]['_id'])
         $("#vid1 video")[0].load();
         $("#vid2 video")[0].load();
+        current_match = obj['match_id'];
+      };
 
-      });
+      replace_vids(get_match());
     </script>
 
   </body>
