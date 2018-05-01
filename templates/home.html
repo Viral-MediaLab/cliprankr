@@ -38,7 +38,8 @@
       </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
@@ -75,13 +76,20 @@
           break;
         }
         var obj = {
-          tournament_id: $('.to-be-considered').text(),
-          match_id: current_match,
-          win_id: win_id,
-          lose_id: lose_id
+          'tournament_id': $('.to-be-considered').text(),
+          'match_id': current_match,
+          'win_id': win_id,
+          'lose_id': lose_id
         }
         console.log(obj);
-        replace_vids(get_match());
+        $.ajax({
+          url: '/record',
+          data: JSON.stringify(obj),
+          type: 'POST',
+          headers: {'Content-Type': 'application/json; charset=utf-8'},
+          success: (data) => {console.log(data); replace_vids(data); }
+        });
+        //replace_vids(get_match());
       });
 
       var get_match = () => {
@@ -133,7 +141,8 @@
         return obj
       }
 
-      var replace_vids = (obj) => {
+      var replace_vids = (data) => {
+        var obj = JSON.parse(data);
         $('.to-be-considered').text(obj['tournament_id']);
         $('#vid1 video source').attr('src', obj['participants'][0]['videoUrl']);
         $('#vid2 video source').attr('src', obj['participants'][1]['videoUrl']);
