@@ -1,9 +1,15 @@
 import json
 from random import randint
 from flask import Flask, render_template, request, redirect, abort
+from flask_pymongo import PyMongo
 from trueskill import Rating, quality_1vs1, rate_1vs1
 
 app = Flask(__name__)
+
+app.config['MONGO_DBNAME'] = 'matchdb'
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/matchdb'
+
+mongo = PyMongo(app)
 
 def get_vids():
     videoMatches = [
@@ -103,6 +109,12 @@ def recordresults():
     # update respective ratings in db
 
     return json.dumps(get_vids()) # json.dumps(request.json)
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST':
+        matches = mongo.db.vids
+        # TODO have some way of adding videos to the database
 
 # TODO return the top results for an emotion
 @app.route('/results/<emotion>', methods=['GET'])

@@ -10,7 +10,7 @@
     <div class="container">
       <div class="row" style="padding-top:75px; padding-bottom:50px;">
         <div class="col-sm">
-          <h1>Which clip expresses <span class="to-be-considered">Joyful</span>?</h1>
+          <h1>Which clip expresses <span class="to-be-considered">Joy</span>?</h1>
         </div>
       </div>
       <div class="row" style="text-align:center;">
@@ -114,6 +114,13 @@
           "http://um-bubble.media.mit.edu:10022/static/1523412675524.http-um-bubble-media-mit-edu-10022-static-1523403041741-5c186ad9-bae9-4543-b536-63a2fc1cd2f1-mp4_nocom.mp4#t=776,799"
         ]
 
+        /*
+        var videoMatches = [
+          "https://youtu.be/nTII0cyUbQo?t=37s",
+          "https://youtu.be/nTII0cyUbQo?t=1m24s"
+        ]
+        */
+
         do {
           rand1 = Math.floor(Math.random() * videoMatches.length);
           rand2 = Math.floor(Math.random() * videoMatches.length);
@@ -138,7 +145,7 @@
           ]
         }
 
-        return obj
+        return JSON.stringify(obj)
       }
 
       var replace_vids = (data) => {
